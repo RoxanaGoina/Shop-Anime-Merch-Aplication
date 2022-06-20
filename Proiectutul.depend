@@ -1,0 +1,69 @@
+# depslib dependency file v1.0
+1653945444 source:c:\users\asus\desktop\p2 clase\string\proiectutul\main.cpp
+	<iostream>
+	<list>
+	<string>
+	<string.h>
+	<map>
+	<iterator>
+	<vector>
+	<fstream>
+	"PROIECT.h"
+	<fstream>
+
+1653943021 c:\users\asus\desktop\p2 clase\string\proiectutul\proiect.h
+	<iostream>
+	<list>
+	<string>
+	<map>
+	<iterator>
+	<vector>
+
+1653930367 c:\users\asus\desktop\p2 clase\string\proiectutul\proiect.cpp
+	<iostream>
+	<list>
+	<string>
+	<map>
+	<iterator>
+	<vector>
+	"PROIECT.h"
+
+1653944725 source:c:\users\asus\desktop\p2 clase\string\proiectutul\proiect.cpp
+	<iostream>
+	<list>
+	<string>
+	<map>
+	<iterator>
+	<vector>
+	"PROIECT.h"
+
+1655729051 source:c:\users\user\desktop\proiectutul\main.cpp
+	<iostream>
+	<list>
+	<string>
+	<string.h>
+	<map>
+	<iterator>
+	<vector>
+	<fstream>
+	"PROIECT.h"
+	<fstream>
+	<typeinfo>
+
+1655730726 c:\users\user\desktop\proiectutul\proiect.h
+	<iostream>
+	<list>
+	<string>
+	<map>
+	<iterator>
+	<vector>
+
+1655730483 source:c:\users\user\desktop\proiectutul\proiect.cpp
+	<iostream>
+	<list>
+	<string>
+	<map>
+	<iterator>
+	<vector>
+	"PROIECT.h"
+
