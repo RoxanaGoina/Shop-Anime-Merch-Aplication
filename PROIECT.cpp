@@ -84,7 +84,7 @@ void Obiect::setNume(string x)
 }
 ostream& operator <<(ostream &o,const Obiect &x)
 {
-    o<<x.nume<<" "<<x.nr_produs<<" "<<x.pret;
+    o<<x.nume<<" "<<x.nr_produs<<" "<<x.pret<<" $";
     return o;
 }
 string Obiect::getNume()
