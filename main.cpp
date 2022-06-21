@@ -9,7 +9,9 @@
 #include "PROIECT.h"
 #include<fstream>
 #include<typeinfo>
+#include<algorithm>
 list<Client> User;
+
 vector<Obiect>Produsele;
 vector<Manga>List_Manga;
 vector<Haine>List_Haine;
@@ -22,6 +24,12 @@ char path[200]="C:\\Users\\user\\Desktop\\Proiectutul\\Clienti ID.txt";
 char path2[200]="C:\\Users\\user\\Desktop\\Proiectutul\\ADMIN.txt";
 Obiect produse[100];
 int nr=0;
+bool cmp(Obiect o1,Obiect o2){
+return o1.getPret()<o2.getPret();
+}
+bool cmp1(Obiect o1,Obiect o2){
+return o1.getPret()>o2.getPret();
+}
 using namespace std;
 map<string,string> m;
 int contor = 0;
@@ -203,6 +211,16 @@ cout<<"Nume "<<it.getNume()<<" "<<"Pret "<<it.getPret()<<" $"<<" Cantitate in st
        // else if (dynamic_cast<Obiect*>(&it))
        // cout<<"Numele meu "<<it.getNume()<<" "<<"Pret "<<it.getPret()<<" Cantitate in stoc "<< it.getNr();
 
+}
+bool cmp2(Manga m1,Manga m2){
+return m1.getNume()<m2.getNume();
+}
+bool pret1(Haine h1,Haine h2){
+return h1.getPret()<h2.getPret();
+
+}
+bool pret2(Haine h1,Haine h2){
+return h1.getPret()>h2.getPret();
 }
 void meniu_admin();
 void adaugare(){
@@ -596,7 +614,43 @@ void vizualizare_produse_user(){
     string nume,clasa;
     int k=1;
     if(alegere==1)
-    {
+    {int cresc;
+        cout<<"Daca doriti afisarea produselor in ordinea crescatoare a pretului apasati tasta 1 "<<endl<<endl;
+        cout<<"Daca doriti afisarea produselor in ordinea descrescatoare a pretului apasati tasta 2"<<endl<<endl;
+        cout<<"Daca nu aveti preferinte in ceea ce priveste vizualizarea obiectelor apasati tasta 3"<<endl<<endl;
+    cin>>cresc;
+    if(cresc==1){
+            sort(Produsele.begin(),Produsele.end(),cmp);
+            for(auto it:Produsele)
+        {
+            cout<<k<<". "<<"Nume "<<it.getNume()<<" "<<"Pret "<<it.getPret()<<" Cantitate in stoc "<< it.getNr()<<endl;
+            k++;
+        }
+        cout<<"Va intereseaza vreun produs?0 daca nu";
+        cin>>choice;
+        if(choice=1){
+        k=1;
+        for(auto it:Produsele)
+        {
+            if(k==choice)
+            {
+                cout<<"Vreti sa adaugati in cos? "<<endl;
+                cin>>x;
+                if(x==1)
+                {
+                    nume=it.getNume();
+                    clasa="obiect";
+                }
+            }
+            k++;
+        }
+        }
+
+
+    }
+
+    if(cresc==2){
+        sort(Produsele.begin(),Produsele.end(),cmp1);
         for(auto it:Produsele)
         {
             cout<<k<<". "<<"Nume "<<it.getNume()<<" "<<"Pret "<<it.getPret()<<" Cantitate in stoc "<< it.getNr()<<endl;
@@ -624,8 +678,42 @@ void vizualizare_produse_user(){
 
 
     }
+
+     if(cresc==3)
+        for(auto it:Produsele)
+        {
+            cout<<k<<". "<<"Nume "<<it.getNume()<<" "<<"Pret "<<it.getPret()<<" Cantitate in stoc "<< it.getNr()<<endl;
+            k++;
+        }
+        cout<<"Va intereseaza vreun produs?0 daca nu";
+        cin>>choice;
+        if(choice=1){
+        k=1;
+        for(auto it:Produsele)
+        {
+            if(k==choice)
+            {
+                cout<<"Vreti sa adaugati in cos? "<<endl;
+                cin>>x;
+                if(x==1)
+                {
+                    nume=it.getNume();
+                    clasa="obiect";
+                }
+            }
+            k++;
+        }
+        }
+
+    }
     else if(alegere==2){
-            int k=1;
+        int alg;
+    cout<<"Daca doriti o vizualizare alfabetica a articolelor manga apasati tasta 1"<<endl<<endl;
+    cout<<"Daca nu aveti o preferinta in ceea ce priveste vizualizarea acestora apasati tasta 2"<<endl<<endl;
+    cin>>alg;
+    int k=1;
+    if(alg==1)
+    sort(List_Manga.begin(),List_Manga.end(),cmp2);
         for(auto it:List_Manga)
             {
                 cout<<k<<" . Nume "<<it.getNume()<<" "<<"Pret "<<it.getPret()<<" Cantitate in stoc "<< it.getNr()<<endl<<it.get_volume();
@@ -651,11 +739,76 @@ void vizualizare_produse_user(){
             }
             k++;
         }
+        if(alg==2){
+             for(auto it:List_Manga)
+            {
+                cout<<k<<" . Nume "<<it.getNume()<<" "<<"Pret "<<it.getPret()<<" Cantitate in stoc "<< it.getNr()<<endl<<it.get_volume();
+                for(auto &itr:it.get_volum()){
+                cout<<"Numele volumului "<<itr.getNume()<<"Cantitatea din stoc"<<itr.get_stoc()<<" Pret "<<itr.get_pret()<<endl;
+                k++;
+           }//cout<<it;
+        }
+        cout<<"Va intereseaza vreun produs?0 daca nu";
+        cin>>choice;
+        k=1;
+        for(auto it:List_Manga)
+        {
+            if(k==choice)
+            {
+                cout<<"Vreti sa adaugati in cos? "<<endl;
+                cin>>x;
+                if(x==1)
+                {
+                    nume=it.getNume();
+                    clasa="obiect";
+                }
+            }
+            k++;
+        }
+        }
     }
     else if(alegere==3)
-    {
+    {int a;
         int k=1;
+
+        cout<<"Daca doriti vizualizarea articolelor vestimentare in functie de pret crescator apasati tasta 1"<<endl<<endl;
+        cout<<"Daca doriti vizualizarea articolelor vestimentare in functie de pret descrescator apasati tasta 2"<<endl<<endl;
+        cout<<"Daca criteriul de vizualizare nu conteaza pentru dumneavoastra apasati tasta 3"<<endl<<endl;
+        cin>>a;
+
+        if(a==1)
+            sort(List_Haine.begin(),List_Haine.end(),pret1);
+        if(a==2)
+         sort(List_Haine.begin(),List_Haine.end(),pret2);
         for(auto it:List_Haine)
+        {
+            cout<<k<<" . Nume "<<it.getNume()<<" "<<"Pret "<<it.getPret()<<" Cantitate in stoc "<< it.getNr()<<endl;
+            for(auto &itr:it.get_exemplare())
+            {
+                cout<<"Marimea : "<<itr.first<<"    "<<itr.second<<endl;
+            }
+            k++;
+
+        }
+        cout<<"Va intereseaza vreun produs?0 daca nu";
+        cin>>choice;
+        k=1;
+        for(auto it:List_Haine)
+        {
+            if(k==choice)
+            {
+                cout<<"Vreti sa adaugati in cos? "<<endl;
+                cin>>x;
+                if(x==1)
+                {
+                    nume=it.getNume();
+                    clasa="obiect";
+                }
+            }
+            k++;
+        }
+        if(a==3)
+            for(auto it:List_Haine)
         {
             cout<<k<<" . Nume "<<it.getNume()<<" "<<"Pret "<<it.getPret()<<" Cantitate in stoc "<< it.getNr()<<endl;
             for(auto &itr:it.get_exemplare())
@@ -686,8 +839,8 @@ void vizualizare_produse_user(){
   else if(alegere==4)
         meniu_user();
 
-}
 
+    }
 void meniu_admin(){
 
     int alg;
