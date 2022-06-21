@@ -101,9 +101,25 @@ float Obiect::getPret()
 }
 
 
-
-
-
+Haine::Haine(string nume,float pret,int nr_produs,map<int,int> exemplare):Obiect(nume,pret,nr_produs)
+{
+    this->exemplare=exemplare;
+}
+map<int,int> Haine::get_exemplare(){
+return this->exemplare;
+}
+void Manga::setVolume(int x)
+{
+    this->nr_volume=x;
+}
+void Manga::setListaVolume(vector<Obiect>x)
+{
+    this->volume=x;
+}
+void Haine::setMarimi(map<int,int>x)
+{
+    this->exemplare=x;
+}
 
 
 
