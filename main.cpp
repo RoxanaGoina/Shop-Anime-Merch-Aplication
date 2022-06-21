@@ -195,7 +195,7 @@ void modificare(){
     cout<<"2. Manga"<<endl;
     cout<<"3. Haine"<<endl;
     cout<<"4. Nu mai vreau sa modific"<<endl;
-    cout<<"Alegerea dumneavoastra este"<<endl;
+    cout<<"Alegerea dumneavoastra este "<<endl;
     cin>>alegere1;
     if(alegere1==1)
     {cout<<"Alegeti ce doriti sa modificati"<<endl;
@@ -208,6 +208,7 @@ void modificare(){
     int ok=0;
     if(alg==1){
         cout<<"Numele produsul cautat este  ";
+        cin.ignore();
        getline(cin,nume);
         for(auto  &it:Produsele)
         if(it.getNume()==nume){
@@ -221,10 +222,10 @@ void modificare(){
             modificare();
         }
     }
-if(alg==2){
+if(alg==2){ok=0;
     cout<<"Numele produsului cautat este  ";
+    cin.ignore();
     getline(cin,nume1);
-    ok=0;
     for(auto &it:Produsele)
     if(it.getNume()==nume){
             ok=1;
@@ -240,6 +241,7 @@ if(alg==2){
 if(alg==3){
         int cantitate;
      cout<<"Numele produsului cautat este  ";
+     cin.ignore();
     getline(cin,nume);
     ok=0;
     for(auto  &it:Produsele)
@@ -258,6 +260,15 @@ if(alg==4){
 }
 
 }
+    }
+    if(alegere1==2){// Manga
+cout<<" Alegeti ce doriti sa modificati "<<endl;
+cout<<"1. Nume Manga"<<endl<<endl;
+cout<<"2. Pret Manga"<<endl<<endl;
+cout<<"3. Cantitate Manga"<<endl<<endl;
+cout<<"4. Nume Volume "<<endl<<endl;
+cout<<"5. Pret Volume "<<endl<<endl;
+cout<<"6. Cantitate Volume"<<endl<<endl;
     }
 }
 void meniu_admin(){
