@@ -195,40 +195,49 @@ int citire_dictionar(){
 string id,parola;
 ifstream f("Clienti ID.txt");
 while(getline(f,id,'\n')){
-
 getline(f,parola,'\n');
 m.insert({id,parola});
 }}
 void vizualizare_produse(){
     int alegere;
+    system("cls");
     cout<<"Alege categoria de produse pe care doresti sa o vizualizezi :"<<endl;
-    cout<<"1. Obiecte "<<endl<<"2. Manga "<<endl<<"3 .Haine "<<endl<<"4. Nu mai vreau sa vizualizez"<<endl;
+    cout<<"1. Obiecte "<<endl<<"2. Manga "<<endl<<"3. Haine "<<endl<<"4. Nu mai vreau sa vizualizez"<<endl;
     cout<<"Algerea dvs este : " ;
     cin>>alegere;
-    if(alegere==1)
-    for(auto it:Produsele){
-cout<<"Nume "<<it.getNume()<<" "<<"Pret "<<it.getPret()<<" $"<<" Cantitate in stoc "<< it.getNr();
-    }
-    else if(alegere==2)
-        for(auto it:List_Manga)
-            {cout<<"Nume "<<it.getNume()<<" "<<"Pret "<<it.getPret()<<" $"<<" Cantitate in stoc "<< it.getNr()<<endl<<it.get_volume();
-                for(auto &itr:it.get_volum()){
-                cout<<"Numele volumului "<<itr.getNume()<<"Cantitatea din stoc"<<itr.get_stoc()<<" Pret "<<itr.get_pret()<<endl;
-           }//cout<<it;
+    if(alegere==1){
+        system("cls");
+        for(auto it:Produsele){
+            cout<<"Nume "<<it.getNume()<<"\n"<<"Pret "<<it.getPret()<<" $\n"<<"Cantitate in stoc "<< it.getNr()<<"\n\n";
         }
-       else if(alegere==3)
+        system("pause");
+    }
+    else if(alegere==2){
+        system("cls");
+        for(auto it:List_Manga)
+        {cout<<"Nume "<<it.getNume()<<"\n"<<"Pret "<<it.getPret()<<" $\n"<<"Cantitate in stoc "<< it.getNr()<<"\n\n";
+            for(auto &itr:it.get_volum()){
+                cout<<"Numele volumului "<<itr.getNume()<<"\nCantitatea din stoc "<<itr.get_stoc()<<"\nPret "<<itr.get_pret()<<endl;
+            }//cout<<it;
+        }
+        system("pause");
+    }
+    else if(alegere==3)
     {
+        system("cls");
         for(auto it:List_Haine)
         {
-            cout<<"Nume "<<it.getNume()<<" "<<"Pret "<<it.getPret()<<" $"<<" Cantitate in stoc "<< it.getNr()<<endl;
+            cout<<"Nume "<<it.getNume()<<" "<<"Pret "<<it.getPret()<<" $"<<" Cantitate in stoc "<< it.getNr()<<"\n";
             for(auto &itr:it.get_exemplare())
             {
-                cout<<"Marimea : "<<itr.first<<"    "<<itr.second<<endl;
+                cout<<"Marimea : "<<itr.first<<"    "<<itr.second<<"\n";
             }
-
+            cout<<"\n\n";
         }
+        system("pause");
     }
   else if(alegere==4)
+        system("pause");
         meniu_admin();
        // else if (dynamic_cast<Obiect*>(&it))
        // cout<<"Numele meu "<<it.getNume()<<" "<<"Pret "<<it.getPret()<<" Cantitate in stoc "<< it.getNr();
@@ -246,6 +255,7 @@ return h1.getPret()>h2.getPret();
 }
 void meniu_admin();
 void adaugare(){
+    system("cls");
     cout<<"Ce tip de produs vrei sa adaugi?"<<endl;
     cout<<"1.Obiect"<<endl;
     cout<<"2.Manga"<<endl;
@@ -268,40 +278,35 @@ void adaugare(){
        // meniu_admin();
     }
     if(x==2){
-    string nume;
-    float pret;
-    int cantitate,nr_volume;
-    vector<Obiect>M;
-    cin.ignore();
-    cout<<"Nume = ";
-    getline(cin,nume);
-    cout<<" Numar  produse = ";
-    cin>>cantitate;
-    cout<<"Pret = ";
-    cin>>pret;
-    cout<<" $";
-    cout<<"Numar de volume = ";
-    cin>>nr_volume;
-    string nume_v;
-    float pret_v;
-    int  cantitate_v;
-    for(int i=0;i<nr_volume;i++){
-        cout<<"Numele volumului :"<<endl;
+        string nume;
+        float pret;
+        int cantitate,nr_volume;
+        vector<Obiect>M;
         cin.ignore();
-        getline(cin,nume_v);
-        cout<<endl<<"Pretul volumului :"<<endl;
-        cin>>pret_v;
-        cout<<endl<<"Cantitatea stocului :"<<endl;
-        cin>>cantitate_v;
-        cout<<endl;
-      Obiect o(nume_v,pret_v,cantitate_v);
-        M.push_back(o);
-    cout<<o;
-
-    }
-    Manga k(nume,pret,cantitate,nr_volume,M);
-    k.afisare();
-    List_Manga.push_back(k);
+        cout<<"Nume = ";
+        getline(cin,nume);
+        cout<<" Numar  produse = ";
+        cin>>cantitate;
+        cout<<"Pret = ";
+        cin>>pret;
+        cout<<" $";
+        cout<<"Numar de volume = ";
+        cin>>nr_volume;
+        string nume_v;
+        float pret_v;
+        int  cantitate_v;
+        for(int i=0;i<nr_volume;i++){
+            cout<<"Numele volumului :"<<endl; cin.ignore(); getline(cin,nume_v);
+            cout<<endl<<"Pretul volumului :"<<endl; cin>>pret_v;
+            cout<<endl<<"Cantitatea stocului :"<<endl; cin>>cantitate_v;
+            cout<<endl;
+            Obiect o(nume_v,pret_v,cantitate_v);
+            M.push_back(o);
+            cout<<o;
+        }
+        Manga k(nume,pret,cantitate,nr_volume,M);
+        k.afisare();
+        List_Manga.push_back(k);
     }
     else if(x==3){
         string nume;
@@ -309,32 +314,26 @@ void adaugare(){
         int cantitate,marimi,cant,mrm;
         map<int,int> exemplare;
         cin.ignore();
-        cout<<"Nume = ";
-        getline(cin,nume);
-        cout<<" Nr produse = ";
-        cin>>cantitate;
-        cout<<"Pret = ";
-        cin>>pret;
-        cout<<"Cate marimi avem ? ";
-        cin>>marimi;
+        cout<<"Nume = "; getline(cin,nume);
+        cout<<" Nr produse = "; cin>>cantitate;
+        cout<<"Pret = "; cin>>pret;
+        cout<<"Cate marimi avem ? "; cin>>marimi;
         for(int i=0;i<marimi;i++)
         {
-            cout<<"Marime = ";
-            cin>>mrm;
-            cout<<"Nr. Exemplare = ";
-            cin>>cant;
+            cout<<"Marime = "; cin>>mrm;
+            cout<<"Nr. Exemplare = "; cin>>cant;
             exemplare.insert({mrm,cant});
-
         }
         Haine o(nume,pret,cantitate,exemplare);
         List_Haine.push_back(o);
-
-
     }
+    cout<<"Produs adaugat! Apasa inca o data ca sa te intorci la meniu\n";
+    system("pause");
 }
 void scriere_cont();
 void stergere(){
-    cout<<"ce fel de produs doresti sa stergi?"<<endl;
+    system("cls");
+    cout<<"Ce fel de produs doresti sa stergi?"<<endl;
     cout<<"1.Obiect"<<endl;
     cout<<"2.Manga"<<endl;
     cout<<"3.Haine"<<endl;
@@ -354,6 +353,7 @@ void stergere(){
             {
                 ok=1;
                 Produsele.erase(Produsele.begin()+k,Produsele.begin()+k+1);
+                cout<<"Produs sters! Apasa inca o data ca sa te intorci la meniu\n";
                 break;
 
             }
@@ -376,6 +376,7 @@ void stergere(){
             if(it.getNume()==nume)
             {
                 List_Manga.erase(List_Manga.begin()+k,List_Manga.begin()+k+1);
+                cout<<"Produs sters! Apasa inca o data ca sa te intorci la meniu\n";
                 break;
 
             }
@@ -397,6 +398,7 @@ void stergere(){
             if(it.getNume()==nume)
             {
                 List_Haine.erase(List_Haine.begin()+k,List_Haine.begin()+k+1);
+                cout<<"Produs sters! Apasa inca o data ca sa te intorci la meniu\n";
                 break;
 
             }
@@ -407,8 +409,10 @@ void stergere(){
             cout<<"Nu exista un asemenea de produs"<<endl;
         }
     }
+    system("pause");
 }
 void modificare(){
+    system("cls");
     int alegere1,alg;
     float pret,pret1;
     int cantitate;
@@ -422,15 +426,16 @@ void modificare(){
     cin>>alegere1;
     if(alegere1==1)
     {
+        system("cls");
         cout<<"Alegeti ce doriti sa modificati"<<endl;
-    cout<<"1. Numele "<<endl<<endl;
-    cout<<"2. Pretul "<<endl<<endl;
-    cout<<"3. Cantitatea"<<endl<<endl;
-    cout<<"4. Nu mai vreau sa modific "<<endl<<endl;
-    cout<<"Alegerea dumneavoastra este ";
-    cin>>alg;
-    int ok=0;
-    if(alg==1){
+        cout<<"1. Numele "<<endl<<endl;
+        cout<<"2. Pretul "<<endl<<endl;
+        cout<<"3. Cantitatea"<<endl<<endl;
+        cout<<"4. Nu mai vreau sa modific "<<endl<<endl;
+        cout<<"Alegerea dumneavoastra este ";
+        cin>>alg;
+        int ok=0;
+        if(alg==1){
             cout<<"Numele produsul cautat este  ";
             cin.ignore();
            getline(cin,nume);
@@ -443,6 +448,7 @@ void modificare(){
             }
             if(ok==0){
                 cout<<"Nu exista produs cu acest nume. Incercati din nou"<<endl;
+                system("pause");
                 modificare();
             }
         }
@@ -453,41 +459,44 @@ void modificare(){
             getline(cin,nume1);
             cout<<"$$$"<<nume1<<endl;
             for(auto &it:Produsele)
-            if(it.getNume()==nume1){
-                ok=1;
-                cout<<"Pretul nou este  ";
-                cin>>pret;
-                it.setPret(pret);
-            }
+                if(it.getNume()==nume1){
+                    ok=1;
+                    cout<<"Pretul nou este  ";
+                    cin>>pret;
+                    it.setPret(pret);
+                }
             if(ok==0) {
                 cout<<"Nu exista produs cu acest nume. Incercati din nou"<<endl;
+                system("pause");
                 modificare();
             }
         }
-    if(alg==3){
+        if(alg==3){
             int cantitate;
-         cout<<"Numele produsului cautat este  ";
-         cin.ignore();
-        getline(cin,nume);
-        ok=0;
-        for(auto  &it:Produsele)
-        if(it.getNume()==nume){
-                ok=1;
-         cout<<"Cantitatea noua din stoc este  ";
-         cin>>cantitate;
-         it.setNr(cantitate);
-        }
-        if(ok==0) {
-            cout<<"Nu exista produs cu acest nume. Incercati din nou"<<endl;
-            modificare();
-        }
-    if(alg==4){
+            cout<<"Numele produsului cautat este  ";
+            cin.ignore();
+            getline(cin,nume);
+            ok=0;
+            for(auto  &it:Produsele)
+                if(it.getNume()==nume){
+                    ok=1;
+                    cout<<"Cantitatea noua din stoc este  ";
+                    cin>>cantitate;
+                    it.setNr(cantitate);
+                }
+            if(ok==0){
+                cout<<"Nu exista produs cu acest nume. Incercati din nou"<<endl;
+                system("pause");
+                modificare();
+            }
+        if(alg==4){
         modificare();
-    }
+        }
 
     }
     }
     if(alegere1==2){// Manga
+        system("cls");
         cout<<" Alegeti ce doriti sa modificati "<<endl;
         int al;
         cout<<"1. Nume Manga"<<endl<<endl;
@@ -535,7 +544,7 @@ void modificare(){
                     cout<<"Ce volum doriti sa modificati?"<<endl;
                     //cin.ignore();
                     getline(cin,vol);
-                    cout<<"$$$$"<<vol<<endl;
+                    //cout<<"$$$$"<<vol<<endl;
                     for(auto &itrr:itr.get_volum())
                     {
                         if(itrr.getNume()==vol)
@@ -543,8 +552,8 @@ void modificare(){
                             cout<<"Cu ce doriti sa modificati?"<<endl;
                             //cin.ignore();
                             getline(cin,vol2);
-                            itrr.setNume("hwemebew");
-                            cout<<"****"<<vol2<<"  "<<vol<<endl;
+                            itrr.setNume(vol2);
+                            //cout<<"****"<<vol2<<"  "<<vol<<endl;
 
                         }
 
@@ -997,10 +1006,11 @@ void vizualizare_produse_user(){
 
    }
 void meniu_admin(){
-
     int alg;
-    do{cout<<"Alege una dintre optiunile de mai jos : "<<endl;
-    cout<<"1. Vizualizare produse"<<endl <<"2. Adaugare produs "<<endl<<"3. Stergere produs "<<endl<<"4. Modificare  produs"<<endl<<"5. Iesire"<<endl;
+    do{
+        system("cls");
+        cout<<"Alege una dintre optiunile de mai jos : "<<endl;
+        cout<<"1. Vizualizare produse"<<endl <<"2. Adaugare produs "<<endl<<"3. Stergere produs "<<endl<<"4. Modificare  produs"<<endl<<"5. Iesire"<<endl;
         cout<<"Alegerea dumneavoastra este  ";cin>>alg;
         if(alg==1){
             vizualizare_produse();
@@ -1026,6 +1036,7 @@ void meniu_admin(){
         {
             cout<<endl;
             cout<<"Intoarcere la meniul principal"<<endl;
+            system("pause");
             deschidere();
             alg=6;
         }
@@ -1034,71 +1045,70 @@ void meniu_admin(){
 void meniu_user();
 void modificare_parola(){
 string id,parola,parola_noua,parola_noua2;
-cout<<"Va rugam autentificati-va"<<endl;
+cout<<"Va rugam autentificati-va"<<endl; cin.ignore();
 cout<<"ID: ";
-cin>>id;
+cin>>id; cin.ignore();
 cout<<"Parola ";
-cin>>parola;
-int ok=0;
+cin>>parola; cin.ignore();
+int key = 0;
 for(auto it:m){
-if(it.first==id && it.second==parola){
-        ok=1;
-cout<<"Introdu parola noua "<<endl;
-cin>>parola_noua;
-cout<<"Confirmare parola "<<endl;
-cin>>parola_noua2;
-if(parola_noua==parola_noua2){
-
-//it.first=id;
-m[id]=parola_noua2;
-cout<<"Parola a fost modificata cu succes"<<endl;
-}
-else {
-    cout<<"Confirmare imposibila. Mai incearca odata :";
-    cin>>parola_noua2;
-    if(parola_noua==parola_noua2)
-        it.second=parola_noua;
-    else {cout<<"Incercare esuata";
-        meniu_user();
+    if(it.first==id && it.second==parola){
+        key++;
+        cout<<"Introdu parola noua "<<endl;
+        cin>>parola_noua;
+        cout<<"Confirmare parola "<<endl;
+        cin>>parola_noua2;
+        if(parola_noua==parola_noua2){
+            //it.first=id;
+            m[id]=parola_noua2;
+            cout<<"Parola a fost modificata cu succes"<<endl;
+        }
+        else{
+            cout<<"Confirmare imposibila. Mai incearca odata :";
+            cin>>parola_noua2;
+            if(parola_noua==parola_noua2)
+            it.second=parola_noua;
+            else{
+                cout<<"Incercare esuata";
+                system("pause");
+                meniu_user();
+            }
+        }
     }
 }
-}
-if (ok==0) {
-    cout<<"Autentificare imposibila"<<endl;
-    meniu_user();
-}
-}
+    if(key == 0){
+        cout<<"Autentificare imposibila"<<endl;
+        system("pause");
+    }
 }
 void creare_cont(){
-string id,parola;
-cout<<"ID:"<<endl;
-cin>>id;
-while(m.find(id)!=m.end()){
-    cout<<"ID-ul exista deja"<<endl<<"Mai incearca"<<endl;
+    string id,parola;
+    cout<<"ID:"<<endl;
     cin>>id;
-}
-cout<<"Parola(minim 8 caractere)"<<endl;
-cin>>parola;
-while(parola.size()<8)
-{cout<<"Alege o parola mai lunga"<<endl;
-cin>>parola;
-}
-cout<<"Confirmare parola"<<endl;
-int k=0;
-string parola2;
-while(k<3 && parola!=parola2){
-  cout<<"Introdu parola din nou"<<endl;
-  cin>>parola2;
-k++;
+    while(m.find(id)!=m.end()){
+        cout<<"ID-ul exista deja"<<endl<<"Mai incearca"<<endl;
+        cin>>id;
+    }
+    cout<<"Parola(minim 8 caractere)"<<endl;
+    cin>>parola;
+    while(parola.size()<8){
+        cout<<"Alege o parola mai lunga"<<endl;
+        cin>>parola;
+    }
+    cout<<"Confirmare parola"<<endl;
+    int k=0;
+    string parola2;
+    while(k<3 && parola!=parola2){
+        cout<<"Introdu parola din nou"<<endl;
+        cin>>parola2;
+        k++;
+    }
 
-}
-
-if(parola==parola2){
-m.insert({id,parola});
-
-}
-else deschidere();
-}
+    if(parola==parola2){
+        m.insert({id,parola});
+    }
+    else deschidere();
+    }
 void citire_cos()
 {
     ifstream f("cosuri.txt");
@@ -1248,6 +1258,7 @@ void print_fisier()
 }
 void vizualizare_cos()
 {
+    system("cls");
     float pret_fin=0;
     if(Cos1.empty()==1){
     cout<<endl<<endl<<"Cosul dvs.de cumparaturi este gol"<<endl;
@@ -1273,7 +1284,7 @@ void vizualizare_cos()
     cout<<endl<<"----------------------------------------------------"<<endl<<"Pretul final este                     "<<pret_fin<<"$ "<<endl;
     cout<<endl;
     cout<<"Doriti sa plasati comanda? Daca da, apasati 1"<<endl;
-    cout<<"Doriti sa modificati cosul de cumparaturi?Daca da apasati 2"<<endl;
+    cout<<"Doriti sa modificati cosul de cumparaturi? Daca da apasati 2"<<endl;
     int modificare,modfy;
     cin>>modificare;
     string sterg;
@@ -1325,8 +1336,8 @@ void vizualizare_cos()
 
         }while(modfy==1 || modfy==2);
     }
-else if(modificare==1)
-{
+    else if(modificare==1)
+    {
     cout<<"Introduceti datele personale:"<<endl<<endl;
     string nume,prenume,judet,localitate,strada,bloc,scara;
     int nr,apartament;
@@ -1372,7 +1383,7 @@ else if(modificare==1)
     cin>>aleale;
     if(aleale==2)
     {
-        return;
+        system("pause");
     }
     else if(aleale==1)
     {
@@ -1386,37 +1397,47 @@ else if(modificare==1)
     }
 
 }
+    else system("pause");
 }
 void meniu_user(){
     int alegere;
     do{
+        system("cls");
     cout<<"Bun venit!"<<endl;
     cout<<"Alege una dintre optiunile de mai jos"<<endl;
-    cout<<"1. Vizualizare produsele din stoc"<<endl<<"2.Vizualizare cos"<<endl<<"3. Vizualizare numar de puncte de fidelitate"<<endl;
-    cout<<"4. Modificare parola" <<endl<<"5. Iesire"<<endl;
+    cout<<"1. Vizualizare produsele din stoc"<<endl<<"2. Vizualizare cos"<<endl;
+    cout<<"3. Modificare parola" <<endl<<"4. Iesire"<<endl;
 
         cin>>alegere;
         if(alegere==1){
+            system("cls");
             cout<<"Vizualizare produse"<<endl;
             vizualizare_produse_user();
         }
-         if(alegere==2)
-         vizualizare_cos();
-        if(alegere==3)
-            cout<<"Vizualizare numar puncte de fidelitate"<<endl;
-        if(alegere==4){
+         if(alegere==2){
+             system("cls");
+             vizualizare_cos();
+         }
+
+        //if(alegere==3){
+          //  system("cls");
+          //  cout<<"Vizualizare numar puncte de fidelitate"<<endl;
+        //}
+
+        if(alegere==3){
+            system("cls");
             cout<<"Modificare parola"<<endl;
             modificare_parola();
-            //meniu_user();
-            return;
     }
-    if (alegere==5) {
+    if (alegere==4) {
+        system("cls");
         deschidere();
     }
-    }while (alegere==1 || alegere==2 || alegere==3 || alegere==4);
+    }while (alegere==1 || alegere==2 || alegere==3 );
 }
 void deschidere(){
     int alegere;
+    system("cls");
     cout<<"Bun venit!"<<endl;
     cout<<" Selecteaza una dintre optiunile de mai jos"<<endl;
     cout<<"1. Sunt admin"<<endl<<"2. Sunt utilizator"<<endl<<"3. Nu am cont"<<endl<<"4. Pentru a inchide aplicatia apasati tasta 4^^"<<endl;
@@ -1442,6 +1463,7 @@ void deschidere(){
             else {
                 cout<<"Autentificare imposibila";
                 cout<<endl;
+                system("pause");
                 deschidere();
             }
         }
@@ -1461,6 +1483,7 @@ void deschidere(){
             cout<<endl;
             cout<<"Autentificare imposibila"<<endl;
             cout<<endl;
+            system("pause");
             deschidere();
             }
 
@@ -1468,9 +1491,10 @@ void deschidere(){
     }
     else if(alegere==3){
       creare_cont();
-        cout<<"Contul a fost creat cu succes";
+        cout<<"Contul a fost creat cu succes\n";
+        system("pause");
     }
-    else
+    else if(alegere == 4)
     {
         return ;
     }

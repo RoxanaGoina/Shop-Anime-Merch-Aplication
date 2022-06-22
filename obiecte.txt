@@ -5,6 +5,9 @@ Carte de colorat
 Pix
 4.5
 12
+bat
+1e+13
+9
 Manga
 Attack on Titan
 200.2
