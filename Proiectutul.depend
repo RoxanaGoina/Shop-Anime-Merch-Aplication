@@ -37,7 +37,7 @@
 	<vector>
 	"PROIECT.h"
 
-1655748706 source:c:\users\user\desktop\proiectutul\main.cpp
+1655908862 source:c:\users\user\desktop\proiectutul\main.cpp
 	<iostream>
 	<list>
 	<string>
@@ -49,8 +49,9 @@
 	"PROIECT.h"
 	<fstream>
 	<typeinfo>
+	<algorithm>
 
-1655730726 c:\users\user\desktop\proiectutul\proiect.h
+1655885093 c:\users\user\desktop\proiectutul\proiect.h
 	<iostream>
 	<list>
 	<string>
@@ -58,7 +59,7 @@
 	<iterator>
 	<vector>
 
-1655754727 source:c:\users\user\desktop\proiectutul\proiect.cpp
+1655815192 source:c:\users\user\desktop\proiectutul\proiect.cpp
 	<iostream>
 	<list>
 	<string>

@@ -35,6 +35,9 @@
 		<Unit filename="PROIECT.cpp" />
 		<Unit filename="PROIECT.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="puncte_fid.txt">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

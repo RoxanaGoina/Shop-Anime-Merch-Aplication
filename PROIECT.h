@@ -61,7 +61,7 @@ public:
 class Client{
     string nume;
     int nr_puncte_f;
-    list <int > calendar;
+   // list <int > calendar;
 public:
     Client(string nume, int nr, list<int> calendar);
 };

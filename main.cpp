@@ -11,11 +11,15 @@
 #include<typeinfo>
 #include<algorithm>
 list<Client> User;
-
+string idi;
 vector<Obiect>Produsele;
 vector<Manga>List_Manga;
 vector<Haine>List_Haine;
-map<string,string> Cos;
+map<string,int>puncte;
+map<string,int> Cos1;
+map<string,float>Cos2;
+map<string,string> Cos0;
+map<string,int>Cos3;
 #define NR_MAX_UTILIZATORI 10000
 #define maxCharsPerLine 100
 void meniu_user();
@@ -33,6 +37,7 @@ return o1.getPret()>o2.getPret();
 using namespace std;
 map<string,string> m;
 int contor = 0;
+void citire_cos();
 int readFromFile(char fileName[200])
     {
         FILE *filePointer = fopen(fileName, "r");
@@ -153,9 +158,26 @@ string id,password;
     getline(f,password,'\n');
     f.close();
     for(auto it: m)
-    if(id_user==it.first && password_user==it.second)
+    if(id_user==it.first && password_user==it.second){
+
+        idi=id_user;
+        citire_cos();
         return 1;
-    else return 0;
+    }
+
+  return 0;
+}
+void citire_puncte()
+{
+    ifstream f("puncte_fid.txt");
+    string nume;
+    int pct;
+    while(f>>nume)
+    {
+        f>>pct;
+        puncte[nume]=pct;
+    }
+
 }
 int login(string id1,string password1)
 {
@@ -612,133 +634,210 @@ void vizualizare_produse_user(){
     cin>>alegere;
     int choice,x;
     string nume,clasa;
+    float pret;
     int k=1;
+    int cant;
     if(alegere==1)
-    {int cresc;
-        cout<<"Daca doriti afisarea produselor in ordinea crescatoare a pretului apasati tasta 1 "<<endl<<endl;
-        cout<<"Daca doriti afisarea produselor in ordinea descrescatoare a pretului apasati tasta 2"<<endl<<endl;
-        cout<<"Daca nu aveti preferinte in ceea ce priveste vizualizarea obiectelor apasati tasta 3"<<endl<<endl;
-    cin>>cresc;
-    if(cresc==1){
-            sort(Produsele.begin(),Produsele.end(),cmp);
+    {
+            int cresc;
+            cout<<"Daca doriti afisarea produselor in ordinea crescatoare a pretului apasati tasta 1 "<<endl<<endl;
+            cout<<"Daca doriti afisarea produselor in ordinea descrescatoare a pretului apasati tasta 2"<<endl<<endl;
+            cout<<"Daca nu aveti preferinte in ceea ce priveste vizualizarea obiectelor apasati tasta 3"<<endl<<endl;
+            cin>>cresc;
+            if(cresc==1){
+                sort(Produsele.begin(),Produsele.end(),cmp);
+                for(auto it:Produsele)
+                {
+                    cout<<k<<". "<<"Nume "<<it.getNume()<<" "<<"Pret "<<it.getPret()<<" Cantitate in stoc "<< it.getNr()<<endl;
+                    k++;
+                }
+            cout<<endl<<"Va intereseaza vreun produs?"<<endl<<endl<<"Daca da,introduceti nr produsului"<<endl<<"Daca nu, apastai tasta 0"<<endl<<endl;
+            cin>>choice;
+            if(choice!=0){
+            k=1;
             for(auto it:Produsele)
-        {
-            cout<<k<<". "<<"Nume "<<it.getNume()<<" "<<"Pret "<<it.getPret()<<" Cantitate in stoc "<< it.getNr()<<endl;
-            k++;
-        }
-        cout<<"Va intereseaza vreun produs?0 daca nu";
-        cin>>choice;
-        if(choice=1){
-        k=1;
-        for(auto it:Produsele)
-        {
-            if(k==choice)
             {
-                cout<<"Vreti sa adaugati in cos? "<<endl;
-                cin>>x;
-                if(x==1)
+                if(k==choice)
                 {
-                    nume=it.getNume();
-                    clasa="obiect";
+                    cout<<"Vreti sa adaugati in cos? "<<endl;
+                    cin>>x;
+                    if(x==1)
+                    {
+                        cout<<endl<<"Cate bucati doriti sa cumparati?"<<endl;
+                        cin>>cant;
+                        nume=it.getNume();
+                        if(Cos1.count(nume)>0)
+                        {
+                            Cos1[nume]=cant+Cos1[nume];
+                        }
+                        else{
+                        Cos1[nume]=cant;
+                        Cos2[nume]=it.getPret();
+                        }
+
+
+                    }
                 }
+                k++;
             }
-            k++;
-        }
-        }
-
-
-    }
-
-    if(cresc==2){
-        sort(Produsele.begin(),Produsele.end(),cmp1);
-        for(auto it:Produsele)
-        {
-            cout<<k<<". "<<"Nume "<<it.getNume()<<" "<<"Pret "<<it.getPret()<<" Cantitate in stoc "<< it.getNr()<<endl;
-            k++;
-        }
-        cout<<"Va intereseaza vreun produs?0 daca nu";
-        cin>>choice;
-        if(choice=1){
-        k=1;
-        for(auto it:Produsele)
-        {
-            if(k==choice)
+            }
+            if(choice==0)
             {
-                cout<<"Vreti sa adaugati in cos? "<<endl;
-                cin>>x;
-                if(x==1)
-                {
-                    nume=it.getNume();
-                    clasa="obiect";
-                }
+                return;
             }
-            k++;
-        }
-        }
 
 
-    }
-
-     if(cresc==3)
-        for(auto it:Produsele)
-        {
-            cout<<k<<". "<<"Nume "<<it.getNume()<<" "<<"Pret "<<it.getPret()<<" Cantitate in stoc "<< it.getNr()<<endl;
-            k++;
         }
-        cout<<"Va intereseaza vreun produs?0 daca nu";
-        cin>>choice;
-        if(choice=1){
-        k=1;
-        for(auto it:Produsele)
-        {
-            if(k==choice)
+
+        if(cresc==2){
+            sort(Produsele.begin(),Produsele.end(),cmp1);
+            for(auto it:Produsele)
             {
-                cout<<"Vreti sa adaugati in cos? "<<endl;
-                cin>>x;
-                if(x==1)
-                {
-                    nume=it.getNume();
-                    clasa="obiect";
-                }
+                cout<<k<<". "<<"Nume "<<it.getNume()<<" "<<"Pret "<<it.getPret()<<" Cantitate in stoc "<< it.getNr()<<endl;
+                k++;
             }
-            k++;
-        }
+            cout<<endl<<"Va intereseaza vreun produs?"<<endl<<endl<<"Daca da,introduceti nr produsului"<<endl<<"Daca nu, apastai tasta 0"<<endl<<endl;
+            cin>>choice;
+            if(choice!=0){
+            k=1;
+            for(auto it:Produsele)
+            {
+                if(k==choice)
+                {
+                    cout<<"Vreti sa adaugati in cos? "<<endl;
+                    cin>>x;
+                    if(x==1)
+                    {
+                        cout<<endl<<"Cate bucati doriti sa cumparati?"<<endl;
+                        cin>>cant;
+                        nume=it.getNume();
+                        if(Cos1.count(nume)>0)
+                        {
+                            Cos1[nume]=cant+Cos1[nume];
+                        }
+                        else{
+                        Cos1[nume]=cant;
+                        Cos2[nume]=it.getPret();
+                        }
+
+                    }
+                }
+                k++;
+            }
+            }
+            if(choice==0)
+            {
+                return;
+            }
+
+
         }
 
+         if(cresc==3){
+            for(auto it:Produsele)
+            {
+                cout<<k<<". "<<"Nume "<<it.getNume()<<" "<<"Pret "<<it.getPret()<<" Cantitate in stoc "<< it.getNr()<<endl;
+                k++;
+            }
+            cout<<endl<<"Va intereseaza vreun produs?"<<endl<<endl<<"Daca da,introduceti nr produsului"<<endl<<"Daca nu, apastai tasta 0"<<endl<<endl;
+            cin>>choice;
+            if(choice!=0){
+            k=1;
+            for(auto it:Produsele)
+            {
+                if(k==choice)
+                {
+                    cout<<"Vreti sa adaugati in cos? "<<endl;
+                    cin>>x;
+                    if(x==1)
+                    {
+                        cout<<endl<<"Cate bucati doriti sa cumparati?"<<endl;
+                        cin>>cant;
+
+                        nume=it.getNume();
+                        if(Cos1.count(nume)>0)
+                        {
+                            Cos1[nume]=cant+Cos1[nume];
+                        }
+                        else{
+                        Cos1[nume]=cant;
+                        Cos2[nume]=it.getPret();
+                        }
+
+
+                    }
+                }
+                k++;
+            }
+            }
+            if(choice==0)
+            {
+                return;
+            }
+
+        }
     }
     else if(alegere==2){
         int alg;
     cout<<"Daca doriti o vizualizare alfabetica a articolelor manga apasati tasta 1"<<endl<<endl;
     cout<<"Daca nu aveti o preferinta in ceea ce priveste vizualizarea acestora apasati tasta 2"<<endl<<endl;
     cin>>alg;
-    int k=1;
-    if(alg==1)
+    int k=1,k2;
+    if(alg==1){
     sort(List_Manga.begin(),List_Manga.end(),cmp2);
         for(auto it:List_Manga)
             {
-                cout<<k<<" . Nume "<<it.getNume()<<" "<<"Pret "<<it.getPret()<<" Cantitate in stoc "<< it.getNr()<<endl<<it.get_volume();
+                cout<<k<<" . Nume "<<it.getNume()<<" "<<"Pret "<<it.getPret()<<" Cantitate in stoc "<< it.getNr()<<endl;
+                k2=1;
                 for(auto &itr:it.get_volum()){
-                cout<<"Numele volumului "<<itr.getNume()<<"Cantitatea din stoc"<<itr.get_stoc()<<" Pret "<<itr.get_pret()<<endl;
+                cout<<k2<<". "<<"Numele volumului "<<itr.getNume()<<"Cantitatea din stoc"<<itr.get_stoc()<<" Pret "<<itr.get_pret()<<endl;
+                k2++;
+                }
                 k++;
            }//cout<<it;
-        }
-        cout<<"Va intereseaza vreun produs?0 daca nu";
+
+        cout<<endl<<"Va intereseaza vreun produs?"<<endl<<endl<<"Daca da,introduceti nr produsului"<<endl<<"Daca nu, apastai tasta 0"<<endl<<endl;
         cin>>choice;
+        if(choice!=0){
         k=1;
+        int adda;
         for(auto it:List_Manga)
         {
             if(k==choice)
             {
-                cout<<"Vreti sa adaugati in cos? "<<endl;
+                cout<<"Daca doriti sa adaugati un volum introduceti numarul voumului"<<endl;
+                cout<<"Daca doriti nu mai doriti sa adaugati introdueti 0"<<endl<<endl;
                 cin>>x;
-                if(x==1)
+                k2=1;
+                for(auto &itr:it.get_volum())
                 {
-                    nume=it.getNume();
-                    clasa="obiect";
+                    if(k2==x)
+                    {
+                        cout<<"Cate doriti sa adaugati?"<<endl;
+                        cin>>adda;
+                        if(Cos1.count(itr.getNume())>0)
+                        {
+
+                            Cos1[itr.getNume()]=adda+Cos1[itr.getNume()];
+                        }
+                        else{
+                               // cout<<itr.getNume()<<"%%%\n";
+                            Cos1[itr.getNume()]=adda;
+                            Cos2[itr.getNume()]=itr.getPret();
+                            Cos0[itr.getNume()]=it.getNume();
+                        }
+
+                        cout<<endl<<"S-a adaugat cu succes"<<endl;
+
+                    }
+                    k2++;
                 }
             }
             k++;
         }
+        }
+    }
+
         if(alg==2){
              for(auto it:List_Manga)
             {
@@ -748,29 +847,49 @@ void vizualizare_produse_user(){
                 k++;
            }//cout<<it;
         }
-        cout<<"Va intereseaza vreun produs?0 daca nu";
+        cout<<endl<<"Va intereseaza vreun produs?"<<endl<<endl<<"Daca da,introduceti nr produsului"<<endl<<"Daca nu, apastai tasta 0"<<endl<<endl;
         cin>>choice;
+        if(choice!=0){
         k=1;
+        int adda;
         for(auto it:List_Manga)
         {
             if(k==choice)
             {
-                cout<<"Vreti sa adaugati in cos? "<<endl;
+                cout<<"Daca doriti sa adaugati un volum introduceti numarul voumului"<<endl;
+                cout<<"Daca doriti nu mai doriti sa adaugati introdueti 0"<<endl<<endl;
                 cin>>x;
-                if(x==1)
+                k2=1;
+                for(auto &itr:it.get_volum())
                 {
-                    nume=it.getNume();
-                    clasa="obiect";
+                    if(k2==x)
+                    {
+                        cout<<"Cate doriti sa adaugati?"<<endl;
+                        cin>>adda;
+                       if(Cos1.count(itr.getNume())>0)
+                        {
+                            Cos1[itr.getNume()]=adda+Cos1[itr.getNume()];
+                        }
+                        else{
+                            Cos1[itr.getNume()]=adda;
+                            Cos2[itr.getNume()]=itr.getPret();
+                            Cos0[itr.getNume()]=it.getNume();
+                        }
+                        cout<<endl<<"S-a adaugat cu succes"<<endl;
+
+                    }
+                    k2++;
                 }
             }
             k++;
+        }
         }
         }
     }
     else if(alegere==3)
     {int a;
         int k=1;
-
+        int k2;
         cout<<"Daca doriti vizualizarea articolelor vestimentare in functie de pret crescator apasati tasta 1"<<endl<<endl;
         cout<<"Daca doriti vizualizarea articolelor vestimentare in functie de pret descrescator apasati tasta 2"<<endl<<endl;
         cout<<"Daca criteriul de vizualizare nu conteaza pentru dumneavoastra apasati tasta 3"<<endl<<endl;
@@ -783,31 +902,50 @@ void vizualizare_produse_user(){
         for(auto it:List_Haine)
         {
             cout<<k<<" . Nume "<<it.getNume()<<" "<<"Pret "<<it.getPret()<<" Cantitate in stoc "<< it.getNr()<<endl;
+            k2=1;
             for(auto &itr:it.get_exemplare())
             {
-                cout<<"Marimea : "<<itr.first<<"    "<<itr.second<<endl;
+                cout<<k2<<". "<<"Marimea : "<<itr.first<<"    "<<itr.second<<endl;
+                k2++;
             }
             k++;
 
         }
-        cout<<"Va intereseaza vreun produs?0 daca nu";
+        cout<<endl<<"Va intereseaza vreun produs?"<<endl<<endl<<"Daca da,introduceti nr produsului"<<endl<<"Daca nu, apastai tasta 0"<<endl<<endl;
         cin>>choice;
         k=1;
+
+        int cantiteisan;
         for(auto it:List_Haine)
         {
             if(k==choice)
             {
-                cout<<"Vreti sa adaugati in cos? "<<endl;
+                cout<<"Daca doriti sa adaugati in cos, introduceti indicele marimii"<<endl;
+                cout<<"Daca nu apasati tasta 0";
                 cin>>x;
-                if(x==1)
+                k2=1;
+                for(auto &itr:it.get_exemplare())
                 {
-                    nume=it.getNume();
-                    clasa="obiect";
+                    if(k2==x){
+                            cout<<"Cate bucati doriti sa adaugati?"<<endl;
+                            cin>>cantiteisan;
+                            if(Cos1.count(it.getNume())>0)
+                        {
+                            Cos1[it.getNume()]=cantiteisan+Cos1[it.getNume()];
+                        }
+                        else{
+                            Cos1[it.getNume()]=cantiteisan;
+                            Cos2[it.getNume()]=it.getPret();
+                            Cos3[it.getNume()]=itr.first;
+                        }
+
+                    }
+                    k2++;
                 }
             }
             k++;
         }
-        if(a==3)
+        if(a==3){
             for(auto it:List_Haine)
         {
             cout<<k<<" . Nume "<<it.getNume()<<" "<<"Pret "<<it.getPret()<<" Cantitate in stoc "<< it.getNr()<<endl;
@@ -818,29 +956,46 @@ void vizualizare_produse_user(){
             k++;
 
         }
-        cout<<"Va intereseaza vreun produs?0 daca nu";
+        cout<<endl<<"Va intereseaza vreun produs?"<<endl<<endl<<"Daca da,introduceti nr produsului"<<endl<<"Daca nu, apastai tasta 0"<<endl<<endl;
         cin>>choice;
         k=1;
+        int k2;
+        int cantiteisan;
         for(auto it:List_Haine)
         {
             if(k==choice)
             {
-                cout<<"Vreti sa adaugati in cos? "<<endl;
+                cout<<"Daca doriti sa adaugati in cos, introduceti indicele marimii"<<endl;
+                cout<<"Daca nu apasati tasta 0";
                 cin>>x;
-                if(x==1)
+                k2=1;
+                for(auto &itr:it.get_exemplare())
                 {
-                    nume=it.getNume();
-                    clasa="obiect";
+                    if(k2==x){
+                            cout<<"Cate bucati doriti sa adaugati?"<<endl;
+                            cin>>cantiteisan;
+                        if(Cos1.count(it.getNume())>0)
+                        {
+                            Cos1[it.getNume()]=cantiteisan+Cos1[it.getNume()];
+                        }
+                        else{
+                            Cos1[it.getNume()]=cantiteisan;
+                            Cos2[it.getNume()]=it.getPret();
+                            Cos3[it.getNume()]=itr.first;
+                        }
+                    }
+                    k2++;
                 }
             }
             k++;
         }
-    }
+    }}
   else if(alegere==4)
         meniu_user();
 
 
-    }
+
+   }
 void meniu_admin(){
 
     int alg;
@@ -944,12 +1099,300 @@ m.insert({id,parola});
 }
 else deschidere();
 }
+void citire_cos()
+{
+    ifstream f("cosuri.txt");
+    ofstream g("cosuri_help.txt");
+    string id;
+    int nr_prod,cant;
+    string tip,nume;
+    float pret;
+    string manga;
+    int marime,nr,i;
+    //f.ignore();
+    while(getline(f,id))
+    {
+       // f.ignore();
+        cout<<endl<<endl<<id<<endl<<endl;
+        if(id!=idi)
+        {
+            g<<id<<endl;
+          cout<<id<<"*"<<idi<<"$"<<endl;
+            f>>nr;
+            g<<nr<<endl;
+            for(i=0;i<nr;i++)
+            {
+
+                f.ignore();
+                getline(f,tip);
+               // cout<<"@@"<<tip<<endl;
+                if(tip=="Obiect")
+                {
+                  //  f.ignore();
+                    getline(f,nume);
+                    f>>cant;
+                    f>>pret;
+                    cout<<tip<<endl<<nume<<endl<<cant<<endl<<pret<<endl;
+                    g<<tip<<endl<<nume<<endl<<cant<<endl<<pret<<endl;
+
+                }
+                else if(tip=="Manga")
+                {
+                    //f.ignore();
+                    getline(f,nume);
+                    getline(f,manga);
+                        f>>pret;
+                        f>>cant;
+                    g<<tip<<endl<<manga<<endl<<nume<<endl<<cant<<endl<<pret<<endl;
+                }
+                else if(tip=="Haine")
+                {
+                   // f.ignore();
+                    getline(f,nume);
+                    f>>marime;
+                    f>>pret;
+                    f>>cant;
+                    g<<tip<<endl<<nume<<endl<<marime<<endl<<cant<<endl<<pret<<endl;
+                }
+            }
+        }
+        else
+        {
+            f>>nr;
+            cout<<"**"<<id<<endl<<nr<<endl;
+            for(i=0;i<nr;i++)
+            {
+
+               f.ignore();
+                getline(f,tip);
+                if(tip=="Obiect")
+                {
+                    //f.ignore();
+                    getline(f,nume);
+                    f>>cant;
+                    f>>pret;
+
+                    //g<<tip<<endl<<nume<<endl<<pret<<endl<<cant<<endl;
+                   // cout<<tip<<endl<<nume<<endl<<pret<<endl<<cant<<endl;
+                    Cos1[nume]=cant;
+                    Cos2[nume]=pret;
+
+
+                }
+                else if(tip=="Manga")
+                {
+                   // f.ignore();
+                    getline(f,nume);
+                    getline(f,manga);
+                        f>>pret;
+                        f>>cant;
+                    cout<<tip<<endl<<manga<<endl<<nume<<endl<<pret<<endl<<cant<<endl;
+                    Cos1[nume]=cant;
+                    Cos2[nume]=pret;
+                    Cos0[nume]=manga;
+                }
+                else if(tip=="Haine")
+                {
+                   // f.ignore();
+                    getline(f,nume);
+                    f>>marime;
+                    f>>pret;
+                    f>>cant;
+                  //  g<<tip<<endl<<nume<<endl<<marime<<endl<<pret<<endl<<cant<<endl;
+                    Cos1[nume]=cant;
+                    Cos2[nume]=pret;
+                    Cos3[nume]=marime;
+                }
+            }
+
+        }
+        f.ignore();
+    }
+   //f.close();
+}
+void print_fisier()
+{
+    ofstream f("cosuri.txt");
+    string x;
+    f<<idi<<endl<<Cos1.size()<<endl;
+    for(auto &it:Cos1)
+    {
+
+        if(Cos0.count(it.first)>0)
+        {
+            f<<"Manga"<<endl;
+            f<<it.first<<endl;
+            f<<Cos0[it.first]<<endl;
+        }
+        else if(Cos3.count(it.first)>0)
+        {
+            f<<"Haine"<<endl;
+
+            f<<it.first<<endl;
+            f<<Cos3[it.first]<<endl;
+        }
+        else
+        {
+            f<<"Obiect"<<endl;
+            f<<it.first<<endl;
+
+
+        }
+        f<<it.second<<endl<<Cos2[it.first]<<endl;
+    }
+    ifstream g("cosuri_help.txt");
+    while(getline(g,x))
+    {
+        f<<x<<endl;
+    }
+}
+void vizualizare_cos()
+{
+    float pret_fin=0;
+    if(Cos1.empty()==1){
+    cout<<endl<<endl<<"Cosul dvs.de cumparaturi este gol"<<endl;
+    }
+    else
+    {
+        cout<<endl<<endl<<"Cosul dvs de cumparaturi:"<<endl;
+        for(auto &it:Cos1)
+        {
+            if(Cos3.count(it.first)>0)
+            {
+                cout<<it.first<<"    Marimea : "<<Cos3[it.first]<<"      "<<it.second<<" bucati      "<<it.second<<" x "<<Cos2[it.first]<<"$"<<endl;
+            }
+            else if(Cos0.count(it.first)>0)
+            {
+                cout<<Cos0[it.first]<<" -- "<<it.first<<"    "<<it.second<<" bucati      "<<it.second<<" x "<<Cos2[it.first]<<"$"<<endl;
+            }
+            else
+            cout<<it.first<<"    "<<it.second<<" bucati      "<<it.second<<" x "<<Cos2[it.first]<<"$"<<endl;
+            pret_fin=pret_fin+it.second*Cos2[it.first];
+        }
+    }
+    cout<<endl<<"----------------------------------------------------"<<endl<<"Pretul final este                     "<<pret_fin<<"$ "<<endl;
+    cout<<endl;
+    cout<<"Doriti sa plasati comanda? Daca da, apasati 1"<<endl;
+    cout<<"Doriti sa modificati cosul de cumparaturi?Daca da apasati 2"<<endl;
+    int modificare,modfy;
+    cin>>modificare;
+    string sterg;
+    int cont=0;
+    int cantiteisan;
+    if(modificare==2)
+    {
+        do{
+        cout<<endl<<"Cum doriti sa modificati?"<<endl;
+        cout<<"1.Doresc sa sterg din cos"<<endl<<"2.Doresc sa modific cantitatea unui produs"<<endl<<"3.Nu mai doresc sa modific"<<endl<<endl;
+        cout<<"Alegere = ";cin>>modfy;
+        if(modfy==1)
+        {
+
+            cout<<"Care este numele produsului pe care doriti sa-l stergeti?"<<endl;
+            cin.ignore();
+            getline(cin,sterg);
+            for(auto &it:Cos1)
+            {
+                if(it.first==sterg)
+                {
+                    Cos1.erase(sterg);
+                    Cos2.erase(sterg);
+                    cont++;
+                    cout<<endl<<"S-a sters cu succes"<<endl;
+                }
+
+            }
+            if(cont==0)
+            {
+                cout<<"Nu exista produsul in cos"<<endl;
+            }
+
+        }
+        else if(modfy==2)
+        {
+            cout<<"Care este numele produsului pe care doriti sa-l modificati?"<<endl;
+            cin.ignore();
+            getline(cin,sterg);
+            cout<<"Cu ce cantitate doriti sa inlocuiti?";
+            cin>>cantiteisan;
+            Cos1[sterg]=cantiteisan;
+
+        }
+        else
+        {
+
+        }
+
+        }while(modfy==1 || modfy==2);
+    }
+else if(modificare==1)
+{
+    cout<<"Introduceti datele personale:"<<endl<<endl;
+    string nume,prenume,judet,localitate,strada,bloc,scara;
+    int nr,apartament;
+    cout<<"Nume : ";cin>>nume;
+    cout<<endl<<"Prenume : ";cin>>prenume;
+    cout<<endl<<"Judet : ";cin>>judet;
+    cout<<endl<<"Localitate : ";cin>>localitate;
+    cout<<endl<<"Strada : ";cin.ignore();getline(cin,strada);
+    cout<<endl<<"Bloc : ";cin>>bloc;
+    //cout<<endl<<"Nr : ";cin>>;
+    cout<<endl<<"Scara : ";cin>>scara;
+    cout<<endl<<"Apartament : ";cin>>apartament;
+    cout<<endl<<endl<<endl<<"-------------------------------------------"<<endl;
+    cout<<"            Finalizare Comanda:             "<<endl<<endl;
+    cout<<"Nume : "<<nume<<"       "<<"Prenume : "<<prenume<<endl;
+    cout<<"Judet : "<<judet<<"       Localitate"<<localitate<<"       Strada : "<<strada<<endl;
+    cout<<"Bloc : "<<bloc<<"         Scara : "<<scara<<"     Apartament: "<<apartament<<endl<<endl;
+    cout<<"               Sumar comanda:        "<<endl;
+  //  cout<<endl;
+    //  cout<<endl<<endl<<"Cosul dvs de cumparaturi:"<<endl;
+
+      pret_fin=0;
+        for(auto &it:Cos1)
+        {
+            if(Cos3.count(it.first)>0)
+            {
+                cout<<it.first<<"    Marimea : "<<Cos3[it.first]<<"      "<<it.second<<" bucati      "<<it.second<<" x "<<Cos2[it.first]<<"$"<<endl;
+            }
+            else if(Cos0.count(it.first)>0)
+            {
+                cout<<Cos0[it.first]<<" -- "<<it.first<<"    "<<it.second<<" bucati      "<<it.second<<" x "<<Cos2[it.first]<<"$"<<endl;
+            }
+            else
+            cout<<it.first<<"    "<<it.second<<" bucati      "<<it.second<<" x "<<Cos2[it.first]<<"$"<<endl;
+            pret_fin=pret_fin+it.second*Cos2[it.first];
+        }
+    cout<<endl<<"-------------------------------------------"<<endl<<"Pretul final este                     "<<pret_fin<<"$ "<<endl;
+    cout<<endl;
+    int aleale;
+    cout<<"Trimiteti comanda?"<<endl;
+    cout<<"1.Da"<<endl;
+    cout<<"2.Nu"<<endl;
+    cin>>aleale;
+    if(aleale==2)
+    {
+        return;
+    }
+    else if(aleale==1)
+    {
+        ofstream f("comenzi.txt");
+        f<<rand()%1000<<endl;
+        f<<nume<<endl<<prenume<<endl<<judet<<endl<<localitate<<endl<<strada<<endl<<bloc<<endl<<scara<<endl<<pret_fin<<endl;
+        Cos0.clear();
+        Cos1.clear();
+        Cos2.clear();
+        Cos3.clear();
+    }
+
+}
+}
 void meniu_user(){
     int alegere;
     do{
     cout<<"Bun venit!"<<endl;
     cout<<"Alege una dintre optiunile de mai jos"<<endl;
-    cout<<"1. Vizualizare produsele din stoc"<<endl<<"2. Stergere produs din cos"<<endl<<"3. Vizualizare numar de puncte de fidelitate"<<endl;
+    cout<<"1. Vizualizare produsele din stoc"<<endl<<"2.Vizualizare cos"<<endl<<"3. Vizualizare numar de puncte de fidelitate"<<endl;
     cout<<"4. Modificare parola" <<endl<<"5. Iesire"<<endl;
 
         cin>>alegere;
@@ -958,7 +1401,7 @@ void meniu_user(){
             vizualizare_produse_user();
         }
          if(alegere==2)
-         cout<<"Stergere produse din cos"<<endl;
+         vizualizare_cos();
         if(alegere==3)
             cout<<"Vizualizare numar puncte de fidelitate"<<endl;
         if(alegere==4){
@@ -968,7 +1411,7 @@ void meniu_user(){
             return;
     }
     if (alegere==5) {
-        return;
+        deschidere();
     }
     }while (alegere==1 || alegere==2 || alegere==3 || alegere==4);
 }
@@ -1006,6 +1449,7 @@ void deschidere(){
     else if(alegere==2){
 {
             string id_user,password_user;
+
             cout<<"ID:"<<endl;
             cin>>id_user;
             cout<<"Parola: "<<endl;
@@ -1019,6 +1463,7 @@ void deschidere(){
             cout<<endl;
             deschidere();
             }
+
         }
     }
     else if(alegere==3){
@@ -1029,6 +1474,7 @@ void deschidere(){
     {
         return ;
     }
+
 }
 void start(){
     deschidere();
@@ -1076,19 +1522,32 @@ int main()
 {
     citire_dictionar();
     citire_obiecte();
+    //citire_cos();
     start();
     umplere_fisier();
     scriere_cont();
+    print_fisier();
 
     //for(auto it:m)
      //   cout<<it.first<<" "<<it.second;
-vector<Obiect>A;
-Obiect a("sdss",15.4,9);
-Obiect b("sdss",15.4,9);
-A.push_back(a);
-A.push_back(b);
+//vector<Obiect>A;
+//Obiect a("sdss",15.4,9);
+//Obiect b("sdss",15.4,9);
+//A.push_back(a);
+//A.push_back(b);
 
 
     cout<<"#";
     return 0;
-}
+}/*Iasmina
+1
+Obiect
+Pix
+12
+4.5
+Roxana
+1
+Obiect
+Pix
+12
+4.6*/
