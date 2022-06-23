@@ -10,6 +10,7 @@
 #include<fstream>
 #include<typeinfo>
 #include<algorithm>
+
 list<Client> User;
 string idi;
 vector<Obiect>Produsele;
@@ -20,6 +21,7 @@ map<string,int> Cos1;
 map<string,float>Cos2;
 map<string,string> Cos0;
 map<string,int>Cos3;
+vector<string>comenzi;
 #define NR_MAX_UTILIZATORI 10000
 #define maxCharsPerLine 100
 void meniu_user();
@@ -1001,10 +1003,103 @@ void vizualizare_produse_user(){
     }}
   else if(alegere==4)
         meniu_user();
-
-
-
    }
+void admin_comenzi()
+{
+    system("cls");
+    //cout<<"mere";
+    int i,nr;
+    //in>>i;
+
+    cout<<"Acestea sunt toate comenzile:"<<endl<<endl;
+    ifstream f("comenzi.txt");
+    string x,z;
+    if(comenzi.size()==0){
+    while(f>>x)
+    {
+        comenzi.push_back("Comanda");
+        f>>z;
+        cout<<"-----------------------------------------\n"<<endl<<"Comanda "<<z<<endl<<endl;
+       // comenzi.push_back(x);
+        comenzi.push_back(z);
+        cout<<"Informatii"<<endl;
+        f.ignore();
+        for(i=0;i<8;i++)
+        {
+           // f.ignore();
+            getline(f,x);
+            comenzi.push_back(x);
+            cout<<x<<endl;
+
+        }
+        f>>nr;
+        cout<<"^^"<<nr<<endl<<endl;
+         f.ignore();
+        for(i=0;i<nr;i++)
+        {
+
+            getline(f,x);
+            comenzi.push_back(x);
+            cout<<x<<endl;
+        }
+
+    }
+
+    cout<<"-----------------------------------------\n"<<endl;
+    }
+    else
+    {
+        for(auto &it:comenzi)
+        {
+            cout<<it<<endl;
+        }
+
+    }
+    cout<<endl;
+    cout<<"Doriti sa stergeti o comanda?"<<endl;
+    cout<<endl<<"Daca da, apasa 1"<<endl;
+    cout<<"Daca nu,apasa 0"<<endl;
+    cin>>i;
+    string y;
+   // auto it1;
+   int k;
+    if(i==1)
+    {
+        cout<<"Introduceti nr comenzii"<<endl;
+        cin>>y;
+        k=0;
+        for(auto &itr:comenzi)
+        {
+           // cout<<"itr  "<<itr<<endl;
+            if(itr=="Comanda")
+            {
+                k++;
+                //advance(itr, 1);
+               // cout<<itr<<"*"<<y<<endl;
+                // cout<<comenzi[k]<<endl;
+                if(comenzi[k]==y)
+                {
+                   //cout<<comenzi[k]<<endl;
+                    while(comenzi[k]!="Comanda"&& k<comenzi.size())
+                    {
+                       // it1=itr+1;
+                       comenzi.erase(comenzi.begin()+k,comenzi.begin()+k+1);
+                    }
+                    comenzi.erase(comenzi.begin()+k,comenzi.begin()+k+1);
+                }
+            }
+            else{k++;}
+        }
+    }
+    for(auto &it:comenzi)
+    {
+        cout<<it<<endl;
+    }
+
+    system("pause");
+}
+
+
 void meniu_admin(){
     int alg;
     do{
@@ -1541,6 +1636,14 @@ for(auto it:m){
     fout<<it.first<<endl<<it.second<<endl;
 }
 fout.close();
+}
+void print_comenzi()
+{
+    ofstream f("comenzi.txt");
+    for(auto &itr:comenzi)
+    {
+        f<<itr<<endl;
+    }
 }
 int main()
 {
